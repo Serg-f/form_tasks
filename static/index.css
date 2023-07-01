@@ -1,0 +1,58 @@
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Apply styles to the container */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f1f1f1;
+}
+
+/* Apply styles to the caption */
+.caption {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Apply styles to the menu */
+nav {
+  background-color: #222;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+}
+
+.menu li {
+  text-align: center;
+}
+
+.menu li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 10px;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.menu li a:hover {
+  background-color: #333;
+}
+
+/* Additional styles for a cool design */
+nav {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.menu li a {
+  background-color: #5f27cd;
+  border-radius: 3px;
+}
