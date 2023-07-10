@@ -1,0 +1,22 @@
+{% extends 'create.html' %}
+
+{% block req_form %}
+    <h2>Edit task "{{ task_inst.title }}"</h2>
+    <form class="task-form" action="{% url '#' task_inst.id %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+                <div>
+                    {{ field.label_tag }}
+                    {% if field.errors %}
+                        <div class="alert-error">
+                            {% for error in field.errors %}
+                                <div>{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {{ field }}
+                </div>
+            {% endfor %}
+        <button class="save-btn" type="submit">Save edit</button>
+    </form>
+{% endblock %}

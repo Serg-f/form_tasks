@@ -20,18 +20,21 @@
   margin-bottom: 20px;
 }
 
-/* Apply styles to the menu */
-nav {
+/* Apply styles to the horizontal menu */
+.menu {
   background-color: #222;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-.menu {
+.menu ul {
   list-style: none;
-  padding: 0;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
 }
 
 .menu li {
-  text-align: center;
+  margin: 0 10px;
 }
 
 .menu li a {
@@ -39,7 +42,7 @@ nav {
   text-decoration: none;
   font-size: 16px;
   padding: 10px;
-  display: block;
+  border-radius: 3px;
   transition: background-color 0.3s ease;
 }
 
@@ -48,11 +51,21 @@ nav {
 }
 
 /* Additional styles for a cool design */
-nav {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
 .menu li a {
   background-color: #5f27cd;
-  border-radius: 3px;
+}
+
+/* Format the text below the menu */
+.content {
+  margin-top: 30px;
+  max-width: 800px;
+}
+
+.content p {
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.content strong {
+  font-weight: bold;
 }

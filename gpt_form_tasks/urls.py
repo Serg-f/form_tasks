@@ -25,5 +25,7 @@ urlpatterns = [
     path('task1/', task1, name='task1'),
     path('task2/create/', create, name='task2_create'),
     path('task2/edit/<int:task_id>', edit, name='task2_edit'),
+    path('task3/create/', create, name='task3_create'),
+    # path('task2/edit/<int:task_id>', edit, name='task2_edit'),
 
 ]
