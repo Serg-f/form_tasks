@@ -4,15 +4,24 @@ from task3.forms import TaskForm
 from .models import Task
 from django.forms import modelformset_factory
 
-TaskFormSet = modelformset_factory(model=Task, fields=('title', 'description'), extra=4)
-
 
 def create(request):
+    TaskFormSet = modelformset_factory(model=Task, form=TaskForm, extra=9)
     if request.method == 'POST':
-        pass
+        formset = TaskFormSet(request.POST)
+        if formset.is_valid():
+            formset.save()
+            messages.success(request, 'Tasks created successfully.')
+            return redirect('task3_create')
+        else:
+            messages.error(request, 'Error occurred while creating tasks.')
     else:
         formset = TaskFormSet()
     context = {
         'formset': formset,
+        'tasks': Task.objects.all()
     }
-    return render(request, 'create.html', context)
+    print('hello')
+    print(*context['tasks'])
+    return render(request, 'create1.html', context)
+    # return render(request, 'test_formset.html', context)

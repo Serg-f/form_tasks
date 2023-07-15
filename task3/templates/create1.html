@@ -7,7 +7,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{% static 'task3.css' %}">
-    <title>Task 2</title>
+    <title>Task 3</title>
 </head>
 <body>
 <div class="container">
@@ -17,7 +17,7 @@
         <ul class="dropdown-menu">
             <li><a href="{% url 'task3_create' %}"> -- Create new task -- </a></li>
             {% for task in tasks %}
-                <li><a href="{% url '#' task.id %}">{{ task.title }}</a></li>
+                <li><a href="#">{{ task.title }}</a></li>
             {% endfor %}
         </ul>
     </div>
@@ -35,25 +35,35 @@
         <h2>Create new task(s)</h2>
         <form class="task-form" action="{% url 'task3_create' %}" method="post">
             {% csrf_token %}
-
             {{ formset.management_form }}
-            {% for form in formset %}
-                {% for field in form %}
-                    <div>
-                        {{ field.label_tag }}
-                        {% if field.errors %}
-                            <div class="alert-error">
-                                {% for error in field.errors %}
-                                    <div>{{ error }}</div>
-                                {% endfor %}
+
+            <div class="form-blocks">
+                {% for form in formset %}
+                    <div class="form-block">
+                        {% for field in form %}
+                            <div class="form-group">
+                                {% if field.name != 'id' %}
+                                    {{ field.label_tag }}
+                                {% endif %}
+                                {% if field.errors %}
+                                    <div class="alert-error">
+                                        {% for error in field.errors %}
+                                            <div>{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                {{ field }}
                             </div>
-                        {% endif %}
-                        {{ field }}
+                        {% endfor %}
                     </div>
                 {% endfor %}
-            {% endfor %}
+            </div>
 
-            <button class="save-btn" type="submit">Create</button>
+            <div class="buttons">
+                <button class="minus-button" type="button">-</button>
+                <button class="create-button" type="submit">Create</button>
+                <button class="plus-button" type="button">+</button>
+            </div>
         </form>
     {% endblock %}
 </div>
@@ -64,6 +74,7 @@
 
     dropdownBtn.addEventListener('click', function () {
         dropdownMenu.classList.toggle('open');
+        dropdownBtn.parentElement.classList.toggle('open');
     });
 </script>
 </body>
