@@ -30,13 +30,26 @@ h1 {
     margin-bottom: 20px;
     color: #333;
 }
-
 .dropdown {
     position: relative;
+    display: inline-block;
+    width: 100%; /* Set the container width to 100% */
+}
+
+.dropdown-menu {
+    position: absolute;
+    width: calc(100% - 2px); /* Subtract 2px to account for border */
+    left: -1px; /* Offset the border */
+    list-style: none;
+    padding: 10px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: none;
+    z-index: 1;
 }
 
 .dropdown-btn {
-    display: block;
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -49,23 +62,10 @@ h1 {
     text-align: left;
 }
 
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    list-style: none;
-    padding: 10px 0;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    display: none;
-}
-.dropdown-menu li {
-    padding: 0;
-}
 
-.dropdown-menu li a {
+
+
+.dropdown-menu a {
     display: block;
     text-decoration: none;
     color: #333;
@@ -74,14 +74,14 @@ h1 {
     border-left: 5px solid transparent;
 }
 
-.dropdown-menu li a:hover {
+.dropdown-menu a:hover {
     background-color: #f2f2f2;
     border-left: 5px solid #5c9be1;
     padding: 5px 15px; /* Keep the padding consistent with the non-hovered state */
 }
 
 
-.dropdown.open .dropdown-menu {
+.dropdown:hover .dropdown-menu {
     display: block;
 }
 
@@ -141,13 +141,6 @@ h1 {
     background-color: #4788c7;
 }
 
-/* Rest of the CSS styles remain the same */
-
-.dropdown-menu.open {
-    display: block;
-}
-
-/* Rest of the CSS styles remain the same */
 
 .messages {
     margin-bottom: 20px;

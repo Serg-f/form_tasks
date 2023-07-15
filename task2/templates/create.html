@@ -14,12 +14,12 @@
     <h1>Task Management</h1>
     <div class="dropdown">
         <button class="dropdown-btn" type="button">Choose the task or create new</button>
-        <ul class="dropdown-menu">
-            <li><a href="{% url 'task2_create' %}"> -- Create new task -- </a></li>
+        <div class="dropdown-menu">
+            <a href="{% url 'task2_create' %}"> -- Create new task -- </a>
             {% for task in tasks %}
-                <li><a href="{% url 'task2_edit' task.id %}">{{ task.title }}</a></li>
+                <a href="{% url 'task2_edit' task.id %}">{{ task.title }}</a>
             {% endfor %}
-        </ul>
+        </div>
     </div>
     {% if messages %}
         <div class="messages">
@@ -54,14 +54,5 @@
         </form>
     {% endblock %}
 </div>
-<script>
-    // JavaScript code to toggle the dropdown menu
-    const dropdownBtn = document.querySelector('.dropdown-btn');
-    const dropdownMenu = document.querySelector('.dropdown-menu');
-
-    dropdownBtn.addEventListener('click', function () {
-        dropdownMenu.classList.toggle('open');
-    });
-</script>
 </body>
 </html>
