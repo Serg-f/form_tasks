@@ -69,7 +69,7 @@
 </div>
 
 </body>
-<!-- Update the JavaScript code as shown below -->
+
 <script>
   // Get the formset prefix and total forms count
   const formsetPrefix = "{{ formset.prefix }}";
@@ -87,13 +87,14 @@
       field.value = "";
     });
 
-    // Update the form's prefix and input fields' names
+    // Update the form's prefix and input fields' names and IDs
     const formElements = newForm.querySelectorAll(`.${formsetPrefix}`);
     formElements.forEach((element) => {
       let name = element.getAttribute("name");
       if (name) {
-        name = name.replace("empty", totalForms);
+        name = name.replace(/__prefix__/g, totalForms);
         element.setAttribute("name", name);
+        element.setAttribute("id", name); // Update the id attribute to ensure uniqueness
       }
     });
 
@@ -104,7 +105,7 @@
 
     // Increment the total forms count
     totalForms++;
-    document.querySelector(`#${formsetPrefix}-TOTAL_FORMS`).setAttribute("value", totalForms);
+    document.querySelector(`input[name="${formsetPrefix}-TOTAL_FORMS"]`).value = totalForms;
   }
 
   // Function to remove the last form from the formset
@@ -118,7 +119,7 @@
 
       // Decrement the total forms count
       totalForms--;
-      document.querySelector(`#${formsetPrefix}-TOTAL_FORMS`).setAttribute("value", totalForms);
+      document.querySelector(`input[name="${formsetPrefix}-TOTAL_FORMS"]`).value = totalForms;
     }
   }
 
@@ -130,5 +131,6 @@
   const minusButton = document.querySelector(".minus-button");
   minusButton.addEventListener("click", removeForm);
 </script>
+
 
 </html>
