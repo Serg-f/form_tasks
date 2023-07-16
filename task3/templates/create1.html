@@ -14,12 +14,12 @@
     <h1>Task Management</h1>
     <div class="dropdown">
         <button class="dropdown-btn" type="button">Choose the task or create new</button>
-        <ul class="dropdown-menu">
-            <li><a href="{% url 'task3_create' %}"> -- Create new task -- </a></li>
+        <div class="dropdown-menu">
+            <a href="{% url 'task3_create' %}"> -- Create new task -- </a>
             {% for task in tasks %}
-                <li><a href="#">{{ task.title }}</a></li>
+                <a href="#">{{ task.title }}</a>
             {% endfor %}
-        </ul>
+        </div>
     </div>
     {% if messages %}
         <div class="messages">
@@ -39,7 +39,7 @@
 
             <div class="form-blocks">
                 {% for form in formset %}
-                    <div class="form-block">
+                    <div class="form-block form-template {{ formset.prefix }}">
                         {% for field in form %}
                             <div class="form-group">
                                 {% if field.name != 'id' %}
@@ -67,15 +67,68 @@
         </form>
     {% endblock %}
 </div>
-<script>
-    // JavaScript code to toggle the dropdown menu
-    const dropdownBtn = document.querySelector('.dropdown-btn');
-    const dropdownMenu = document.querySelector('.dropdown-menu');
 
-    dropdownBtn.addEventListener('click', function () {
-        dropdownMenu.classList.toggle('open');
-        dropdownBtn.parentElement.classList.toggle('open');
-    });
-</script>
 </body>
+<!-- Update the JavaScript code as shown below -->
+<script>
+  // Get the formset prefix and total forms count
+  const formsetPrefix = "{{ formset.prefix }}";
+  let totalForms = parseInt("{{ formset.total_form_count }}");
+
+  // Function to add a new form to the formset
+  function addForm() {
+    // Clone the empty form template
+    const formTemplate = document.querySelector(`.form-template.${formsetPrefix}`);
+    const newForm = formTemplate.cloneNode(true);
+
+    // Clear input field values in the new form
+    const inputFields = newForm.querySelectorAll("input, textarea");
+    inputFields.forEach((field) => {
+      field.value = "";
+    });
+
+    // Update the form's prefix and input fields' names
+    const formElements = newForm.querySelectorAll(`.${formsetPrefix}`);
+    formElements.forEach((element) => {
+      let name = element.getAttribute("name");
+      if (name) {
+        name = name.replace("empty", totalForms);
+        element.setAttribute("name", name);
+      }
+    });
+
+    // Show the new form and append it to the form blocks container
+    newForm.classList.remove("form-template");
+    newForm.style.display = "block";
+    document.querySelector(".form-blocks").appendChild(newForm);
+
+    // Increment the total forms count
+    totalForms++;
+    document.querySelector(`#${formsetPrefix}-TOTAL_FORMS`).setAttribute("value", totalForms);
+  }
+
+  // Function to remove the last form from the formset
+  function removeForm() {
+    const formBlocks = document.querySelectorAll(`.${formsetPrefix}`);
+    if (formBlocks.length > 1) {
+      const lastForm = formBlocks[formBlocks.length - 1];
+
+      // Remove the form from the form blocks container
+      lastForm.remove();
+
+      // Decrement the total forms count
+      totalForms--;
+      document.querySelector(`#${formsetPrefix}-TOTAL_FORMS`).setAttribute("value", totalForms);
+    }
+  }
+
+  // Event listener for the "+" button
+  const plusButton = document.querySelector(".plus-button");
+  plusButton.addEventListener("click", addForm);
+
+  // Event listener for the "-" button
+  const minusButton = document.querySelector(".minus-button");
+  minusButton.addEventListener("click", removeForm);
+</script>
+
 </html>

@@ -50,6 +50,7 @@ h1 {
 }
 
 .dropdown-btn {
+    position: relative;
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -62,7 +63,16 @@ h1 {
     text-align: left;
 }
 
-
+.dropdown-btn::after {
+    content: '';
+    position: absolute;
+    top: 60%;
+    right: 10px; /* Adjust the position as needed */
+    transform: translateY(-50%) rotate(90deg);
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #333;
+}
 
 
 .dropdown-menu a {
