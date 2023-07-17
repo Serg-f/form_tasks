@@ -39,12 +39,10 @@
 
             <div class="form-blocks">
                 {% for form in formset %}
-                    <div class="form-block form-template {{ formset.prefix }}">
-                        {% for field in form %}
-                            <div class="form-group">
-                                {% if field.name != 'id' %}
-                                    {{ field.label_tag }}
-                                {% endif %}
+                    <div class="form-block">
+                        {% for field in form.visible_fields %}
+                            {% if field.name != 'id' %}
+                                {{ field.label_tag }}
                                 {% if field.errors %}
                                     <div class="alert-error">
                                         {% for error in field.errors %}
@@ -53,10 +51,12 @@
                                     </div>
                                 {% endif %}
                                 {{ field }}
-                            </div>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 {% endfor %}
+
+
             </div>
 
             <div class="buttons">
@@ -68,69 +68,56 @@
     {% endblock %}
 </div>
 
-</body>
-
 <script>
-  // Get the formset prefix and total forms count
-  const formsetPrefix = "{{ formset.prefix }}";
-  let totalForms = parseInt("{{ formset.total_form_count }}");
+    document.addEventListener('DOMContentLoaded', function () {
+        const minusButton = document.querySelector('.minus-button');
+        const plusButton = document.querySelector('.plus-button');
 
-  // Function to add a new form to the formset
-  function addForm() {
-    // Clone the empty form template
-    const formTemplate = document.querySelector(`.form-template.${formsetPrefix}`);
-    const newForm = formTemplate.cloneNode(true);
-
-    // Clear input field values in the new form
-    const inputFields = newForm.querySelectorAll("input, textarea");
-    inputFields.forEach((field) => {
-      field.value = "";
+        minusButton.addEventListener('click', removeForm);
+        plusButton.addEventListener('click', addForm);
     });
 
-    // Update the form's prefix and input fields' names and IDs
-    const formElements = newForm.querySelectorAll(`.${formsetPrefix}`);
-    formElements.forEach((element) => {
-      let name = element.getAttribute("name");
-      if (name) {
-        name = name.replace(/__prefix__/g, totalForms);
-        element.setAttribute("name", name);
-        element.setAttribute("id", name); // Update the id attribute to ensure uniqueness
-      }
-    });
+    function removeForm() {
+        const formBlocks = document.querySelectorAll('.form-block');
 
-    // Show the new form and append it to the form blocks container
-    newForm.classList.remove("form-template");
-    newForm.style.display = "block";
-    document.querySelector(".form-blocks").appendChild(newForm);
+        if (formBlocks.length > 1) {
+            formBlocks[formBlocks.length - 1].remove();
 
-    // Increment the total forms count
-    totalForms++;
-    document.querySelector(`input[name="${formsetPrefix}-TOTAL_FORMS"]`).value = totalForms;
-  }
-
-  // Function to remove the last form from the formset
-  function removeForm() {
-    const formBlocks = document.querySelectorAll(`.${formsetPrefix}`);
-    if (formBlocks.length > 1) {
-      const lastForm = formBlocks[formBlocks.length - 1];
-
-      // Remove the form from the form blocks container
-      lastForm.remove();
-
-      // Decrement the total forms count
-      totalForms--;
-      document.querySelector(`input[name="${formsetPrefix}-TOTAL_FORMS"]`).value = totalForms;
+            const managementForm = document.querySelector('#id_form-TOTAL_FORMS');
+            const totalForms = parseInt(managementForm.value);
+            managementForm.value = totalForms - 1;
+        }
     }
-  }
 
-  // Event listener for the "+" button
-  const plusButton = document.querySelector(".plus-button");
-  plusButton.addEventListener("click", addForm);
+    function addForm() {
+        const formBlocks = document.querySelectorAll('.form-block');
+        const emptyFormHtml = '{{ formset.empty_form|escapejs }}';
 
-  // Event listener for the "-" button
-  const minusButton = document.querySelector(".minus-button");
-  minusButton.addEventListener("click", removeForm);
+        const newFormPrefix = 'form-' + formBlocks.length;
+
+        const newFormBlock = document.createElement('div');
+        newFormBlock.classList.add('form-block');
+        newFormBlock.innerHTML = emptyFormHtml.replace(/form-\__prefix__/g, newFormPrefix);
+
+        const formBlocksContainer = formBlocks[0].parentNode;
+        formBlocksContainer.insertBefore(newFormBlock, formBlocks[formBlocks.length - 1].nextSibling);
+
+        const managementForm = document.querySelector('#id_form-TOTAL_FORMS');
+        const totalForms = parseInt(managementForm.value);
+        managementForm.value = totalForms + 1;
+
+        // Update the name attribute of the added form fields to match the correct form prefix
+        const addedFormFields = newFormBlock.querySelectorAll('[name^="form-__prefix__"]');
+        addedFormFields.forEach(field => {
+            const fieldName = field.name.replace(/form-\__prefix__-/g, newFormPrefix + '-');
+            if (!fieldName.includes('-id')) {
+                field.name = fieldName;
+            } else {
+                field.remove();
+            }
+        });
+    }
 </script>
 
-
+</body>
 </html>

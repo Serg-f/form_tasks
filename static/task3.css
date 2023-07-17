@@ -19,9 +19,9 @@ body {
     max-width: 1700px; /* Adjust this value as per your requirements */
     margin: 50px auto;
     padding: 20px;
-    background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f1f1f1;
 }
 
 h1 {
@@ -96,10 +96,6 @@ h1 {
     display: block;
 }
 
-
-.form-group {
-    margin-bottom: 20px;
-}
 
 .task-form label {
     display: block;
@@ -176,9 +172,6 @@ h2 {
     color: #333;
 }
 
-.container {
-    background-color: #f1f1f1;
-}
 
 .save-btn-container {
     display: flex;
@@ -218,14 +211,9 @@ h2 {
 
 .form-block {
     flex-basis: 400px;
-    margin: 5px 10px;
+    margin: 5px 10px 10px;
 }
 
-.container {
-    max-width: 1700px; /* Adjust this value as per your requirements */
-    margin-left: auto;
-    margin-right: auto;
-}
 
 .buttons {
     display: flex;
