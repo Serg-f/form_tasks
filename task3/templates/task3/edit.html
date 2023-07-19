@@ -1,0 +1,36 @@
+{% extends 'task3/create.html' %}
+
+{% block req_form %}
+    <h2>Edit "{{ priority.name }}" priority tasks</h2>
+    <form class="task-form" action="{% url 'task3_edit' priority.id %}" method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+
+        <div class="form-blocks">
+            {% for form in formset %}
+                {{ form.id }}
+                <div class="form-block">
+                    {% for field in form.visible_fields %}
+                        {{ field.label_tag }}
+                        {% if field.errors %}
+                            <div class="alert-error">
+                                {% for error in field.errors %}
+                                    <div>{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {{ field }}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="buttons">
+            <button class="create-button" type="submit">Edit</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

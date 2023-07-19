@@ -1,8 +1,8 @@
-{% extends 'create.html' %}
+{% extends 'task2/create.html' %}
 
 {% block req_form %}
     <h2>Edit task "{{ task_inst.title }}"</h2>
-    <form class="task-form" action="{% url '#' task_inst.id %}" method="post">
+    <form class="task-form" action="{% url 'task2_edit' task_inst.id %}" method="post">
         {% csrf_token %}
         {% for field in form %}
                 <div>

@@ -18,7 +18,7 @@ def create(request):
         'form': form,
         'tasks': Task.objects.all().order_by('-id')
     }
-    return render(request, 'create.html', context)
+    return render(request, 'task2/create.html', context)
 
 
 def edit(request, task_id):
@@ -36,4 +36,4 @@ def edit(request, task_id):
         'tasks': Task.objects.all().order_by('-id'),
         'task_inst': task_inst,
     }
-    return render(request, 'edit.html', context)
+    return render(request, 'task2/edit.html', context)

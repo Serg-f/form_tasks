@@ -1,0 +1,144 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'task3.css' %}">
+    <title>Task 3</title>
+</head>
+<body>
+<div class="container">
+    <h1>Multiple Task Management</h1>
+    <div class="dropdown">
+        <button class="dropdown-btn" type="button">Choose the "priority" to edit or create new task(s)</button>
+        <div class="dropdown-menu">
+            <a href="{% url 'task3_create' %}"> -- Create new task -- </a>
+            {% for priority in priorities %}
+                <a href="{% url 'task3_edit' priority.id %}">{{ priority.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if formset.non_form_errors %}
+        <div class="messages">
+            {% for non_form_error in formset.non_form_errors %}
+                <div class="alert-error">
+                    {{ non_form_error }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% block req_form %}
+        <h2>Create new task(s)</h2>
+        <form class="task-form" action="{% url 'task3_create' %}" method="post">
+            {% csrf_token %}
+            {{ formset.management_form }}
+
+            <div class="form-blocks">
+                {% for form in formset %}
+                    <div class="form-block">
+                        {% for field in form.visible_fields %}
+                            {{ field.label_tag }}
+                            {% if field.errors %}
+                                <div class="alert-error">
+                                    {% for error in field.errors %}
+                                        <div>{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {{ field }}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="buttons">
+                <button class="minus-button" type="button">-</button>
+                <button class="create-button" type="submit">Create</button>
+                <button class="plus-button" type="button">+</button>
+            </div>
+        </form>
+    {% endblock %}
+</div>
+
+{% block script %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const minusButton = document.querySelector('.minus-button');
+            const plusButton = document.querySelector('.plus-button');
+
+            minusButton.addEventListener('click', removeForm);
+            plusButton.addEventListener('click', addForm);
+
+            // Add required attribute to all input fields
+            const inputFields = document.querySelectorAll('input');
+            inputFields.forEach((field) => {
+                field.required = true;
+            });
+        });
+
+        function removeForm() {
+            const formBlocks = document.querySelectorAll('.form-block');
+
+            if (formBlocks.length > 1) {
+                formBlocks[formBlocks.length - 1].remove();
+
+                const managementForm = document.querySelector('#id_form-TOTAL_FORMS');
+                const totalForms = parseInt(managementForm.value);
+                managementForm.value = totalForms - 1;
+            }
+        }
+
+        function addForm() {
+            const formBlocks = document.querySelectorAll('.form-block');
+            const emptyFormHtml = '{{ formset.empty_form|escapejs }}';
+
+            const newFormPrefix = 'form-' + formBlocks.length;
+
+            const newFormBlock = document.createElement('div');
+            newFormBlock.classList.add('form-block');
+            newFormBlock.innerHTML = emptyFormHtml.replace(/form-\__prefix__/g, newFormPrefix);
+
+            const formBlocksContainer = formBlocks[0].parentNode;
+            formBlocksContainer.insertBefore(newFormBlock, formBlocks[formBlocks.length - 1].nextSibling);
+
+            const managementForm = document.querySelector('#id_form-TOTAL_FORMS');
+            const totalForms = parseInt(managementForm.value);
+            managementForm.value = totalForms + 1;
+
+            // Update the name attribute of the added form fields to match the correct form prefix
+            const addedFormFields = newFormBlock.querySelectorAll('[name^="form-__prefix__"]');
+            addedFormFields.forEach(field => {
+                const fieldName = field.name.replace(/form-\__prefix__-/g, newFormPrefix + '-');
+                if (!fieldName.includes('-id')) {
+                    field.name = fieldName;
+                } else {
+                    field.remove();
+                }
+            });
+
+            // Add required attribute to all input fields in the newly added form
+            const newFormInputFields = newFormBlock.querySelectorAll('input');
+            newFormInputFields.forEach((field) => {
+                field.required = true;
+            });
+        }
+    </script>
+{% endblock %}
+
+
+</body>
+</html>

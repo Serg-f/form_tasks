@@ -3,7 +3,7 @@ from .forms import ContactForm
 
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'task1/index.html')
 
 
 def task1(request):
@@ -13,4 +13,4 @@ def task1(request):
             print(form.cleaned_data)
     else:
         form = ContactForm()
-    return render(request, 'task1_form.html', {'form': form})
+    return render(request, 'task1/task1_form.html', {'form': form})

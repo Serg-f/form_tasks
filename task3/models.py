@@ -1,1 +1,1 @@
-from task2.models import Task
+from task2.models import Task, Priority

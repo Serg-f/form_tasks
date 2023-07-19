@@ -33,7 +33,7 @@ h1 {
 .dropdown {
     position: relative;
     display: block;
-    max-width: 500px;
+    max-width: 430px;
     margin: 0 auto;
 }
 
@@ -141,8 +141,8 @@ h1 {
 }
 
 .messages {
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin: 20px auto;
+    max-width: 430px;
 }
 
 .alert-success {
@@ -210,8 +210,8 @@ h2 {
 }
 
 .form-block {
-    flex-basis: 400px;
-    margin: 5px 10px 10px;
+    flex-basis: 430px;
+    margin: 5px 10px 20px;
 }
 
 
@@ -250,3 +250,39 @@ h2 {
     margin: 0 20px;
     /*padding: 10px 20px;*/
 }
+
+.select-item {
+  width: 100%;
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #333;
+  background-color: #fff;
+  transition: border-color 0.3s ease-in-out;
+  padding-right: 30px;
+  box-sizing: border-box;
+}
+
+.select-item:focus {
+  outline: none;
+  border-color: #5c9be1;
+  box-shadow: 0 0 3px rgba(92, 155, 225, 0.6);
+}
+
+/* Rest of the CSS styles remain the same */
+
+/* Add custom styling for the "Delete" checkbox */
+.form-block input[type="checkbox"] {
+    display: inline-block;
+    margin-right: 5px; /* Adjust spacing between the checkbox and the label */
+}
+
+.form-block label[for^="id_tasks-"][for$="-DELETE"] {
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    color: #333;
+}
+
+/* Rest of the CSS styles remain the same */
