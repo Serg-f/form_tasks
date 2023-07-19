@@ -1,0 +1,42 @@
+[
+  {
+    "model": "task2.task",
+    "pk": 1,
+    "fields": {
+      "title": "Have breakfast",
+      "description": "Mix fruit cocktail, bake sandwiches with cheese in the oven, eat tasty breakfast"
+    }
+  },
+  {
+    "model": "task2.task",
+    "pk": 2,
+    "fields": {
+      "title": "Buy products",
+      "description": "Go to the supermarket, choose fresh products, pay for them on cash register, bring the products to the home"
+    }
+  },
+  {
+    "model": "task2.task",
+    "pk": 3,
+    "fields": {
+      "title": "Write a code",
+      "description": "Turn on the programming music, make a plan, do research if necessary, write each part, debug the program"
+    }
+  },
+  {
+    "model": "task2.task",
+    "pk": 4,
+    "fields": {
+      "title": "Go home",
+      "description": "Find the path and go home with peace and peace of peach"
+    }
+  },
+  {
+    "model": "task2.task",
+    "pk": 5,
+    "fields": {
+      "title": "Task1",
+      "description": "go gogoggggggggggggggggggggggggggggggg"
+    }
+  }
+]
