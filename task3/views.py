@@ -14,7 +14,7 @@ def create(request):
         if formset.is_valid():
             formset.save()
             messages.success(request, 'Tasks have been created successfully.')
-            return redirect('task3_create')
+            return redirect('create')
     else:
         formset = TaskFormSet(queryset=Task.objects.none())
     context = {
@@ -37,7 +37,7 @@ def edit(request, priority_id):
                 instance.save()
             formset.save()
             messages.success(request, f'"{priority.name}" priority tasks have been edited successfully.')
-            return redirect('task3_create')
+            return redirect('create')
     else:
         formset = TaskFormSetExtra0(queryset=tasks_set, prefix='tasks')
 

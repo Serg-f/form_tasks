@@ -2,7 +2,7 @@
 
 {% block req_form %}
     <h2>Edit "{{ priority.name }}" priority tasks</h2>
-    <form class="task-form" action="{% url 'task3_edit' priority.id %}" method="post">
+    <form class="task-form" action="{% url 'task3:edit' priority.id %}" method="post">
         {% csrf_token %}
         {{ formset.management_form }}
 

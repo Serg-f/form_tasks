@@ -15,9 +15,9 @@
     <div class="dropdown">
         <button class="dropdown-btn" type="button">Choose the "priority" to edit or create new task(s)</button>
         <div class="dropdown-menu">
-            <a href="{% url 'task3_create' %}"> -- Create new task -- </a>
+            <a href="{% url 'task3:create' %}"> -- Create new task -- </a>
             {% for priority in priorities %}
-                <a href="{% url 'task3_edit' priority.id %}">{{ priority.name }}</a>
+                <a href="{% url 'task3:edit' priority.id %}">{{ priority.name }}</a>
             {% endfor %}
         </div>
     </div>
@@ -43,7 +43,7 @@
 
     {% block req_form %}
         <h2>Create new task(s)</h2>
-        <form class="task-form" action="{% url 'task3_create' %}" method="post">
+        <form class="task-form" action="{% url 'task3:create' %}" method="post">
             {% csrf_token %}
             {{ formset.management_form }}
 

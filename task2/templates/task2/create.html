@@ -15,9 +15,9 @@
     <div class="dropdown">
         <button class="dropdown-btn" type="button">Choose the task or create new</button>
         <div class="dropdown-menu">
-            <a href="{% url 'task2_create' %}"> -- Create new task -- </a>
+            <a href="{% url 'task2:create' %}"> -- Create new task -- </a>
             {% for task in tasks %}
-                <a href="{% url 'task2_edit' task.id %}">{{ task.title }}</a>
+                <a href="{% url 'task2:edit' task.id %}">{{ task.title }}</a>
             {% endfor %}
         </div>
     </div>
@@ -33,7 +33,7 @@
 
     {% block req_form %}
         <h2>Create new task</h2>
-        <form class="task-form" action="{% url 'task2_create' %}" method="post">
+        <form class="task-form" action="{% url 'task2:create' %}" method="post">
             {% csrf_token %}
 
             {% for field in form %}

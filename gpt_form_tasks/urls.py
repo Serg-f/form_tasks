@@ -20,10 +20,8 @@ from task1.views import index
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
-    path('task1', include('task1.urls')),
-    path('task2', include('task2.urls')),
-    path('task3/', include('task3.urls')),
-    # path('task3/create/', create, name='task3_create'),
-    # path('task2/edit/<int:task_id>', edit, name='task2_edit'),
+    path('task1/', include('task1.urls', namespace='task1')),
+    path('task2/', include('task2.urls', namespace='task2')),
+    path('task3/', include('task3.urls', namespace='task3')),
 
 ]

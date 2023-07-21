@@ -10,7 +10,7 @@ def create(request):
         if form.is_valid():
             form.save()
             messages.success(request, f'New task "{form.cleaned_data.get("title")}" has been successfully created!')
-            return redirect('task2_create')
+            return redirect('create')
     else:
         form = TaskForm()
 
@@ -28,7 +28,7 @@ def edit(request, task_id):
         if form.is_valid():
             form.save()
             messages.success(request, f'Task "{task_inst.title}" has been successfully edited')
-            return redirect('task2_create')
+            return redirect('create')
     else:
         form = TaskForm(instance=task_inst)
     context = {
